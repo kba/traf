@@ -36,7 +36,6 @@ module.exports = class BaseBackend
 		data = Fs.readFileSync filename, {encoding: opts.encoding}
 		return @parseSync data, opts
 
-
 	parseFileAsync : (filename, opts, cb) ->
 		if not Utils.isNodeJS
 			return cb new Error("parseFile only available in Node")
@@ -46,4 +45,24 @@ module.exports = class BaseBackend
 		Fs.readFile filename, {encoding: opts.encoding}, (err, data) ->
 			return cb err if err
 			@parseAsync data, opts, cb
+
+	stringifyFileSync: (data, opts, cb) ->
+		if not Utils.isNodeJS
+			throw new Error("stringifyFile only available in Node")
+		if 'filename' not of opts
+			throw new Error("Must pass 'filename' to stringifyFileSync")
+		str = @stringifySync data, opts
+		Fs.writeFileSync opts.filename, data
+
+	stringifyFileAsync: (data, opts, cb) ->
+		if not Utils.isNodeJS
+			return cb new Error("stringifyFile only available in Node")
+		if 'filename' not of opts
+			return cb new Error("Must pass 'filename' to stringifyFileAsync")
+		@stringifyAsync data, opts, (err, str) ->
+			return cb err if err
+			Fs.writeFile opts.filename, str, (err) ->
+				return cb err if err
+				return cb null
+
 
