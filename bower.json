@@ -1,0 +1,24 @@
+{
+  "name": "traf",
+  "description": "Transform between various data serialization formats",
+  "main": "dist/traf.js",
+  "authors": [
+    "kba"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "json",
+    "cson",
+    "tson",
+    "xml",
+    "yaml"
+  ],
+  "homepage": "https://github.com/kba/traf",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

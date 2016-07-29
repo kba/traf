@@ -13,8 +13,11 @@ init:
 clean:
 	@rm -rf lib
 
-browserify: lib
-	cd lib && browserify -d -s traf -o traf-browserify.js traf.js 
+browserify: dist/traf.js
+
+dist/traf.js: lib
+	@mkdir -p dist
+	browserify -d -s traf -o dist/traf.js lib/traf.js 
 
 rebuild: clean init $(LIB)
 
