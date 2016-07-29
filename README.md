@@ -17,6 +17,8 @@ Transform between various data serialization formats
 		* [`Async`](#async)
 * [Supported formats](#supported-formats)
 * [API](#api)
+	* [`guessFiletype(filename, opts={})`](#guessfiletypefilename-opts---)
+	* [`guessFilename(filename, opts)`](#guessfilenamefilename-opts)
 	* [`parseSync(str, opts)`](#parsesyncstr-opts)
 	* [`parseAsync(str, opts, cb)`](#parseasyncstr-opts-cb)
 	* [`stringifySync(data, opts)`](#stringifysyncdata-opts)
@@ -48,8 +50,8 @@ bower install https://github.com/kba/traf
 
 Install the package globally (`npm install -g traf`)
 
-<!-- BEGIN-EVAL echo '<pre>';coffee src/cli.coffee;echo '</pre>' -->
-<pre>
+<!-- BEGIN-EVAL echo '```';coffee src/bin/cli.coffee;echo '```' -->
+```
 Usage: traf [options...] <input-file> [<output-file>]
 
 Transform between different serialization formats
@@ -67,7 +69,7 @@ Arguments:
     <output-file>   Output filename.
                     If omitted, derive output filename from input filename.
                     Can be '-' to write to STDOUT. Specify output format then.
-</pre>
+```
 
 <!-- END-EVAL -->
 
@@ -91,22 +93,18 @@ console.log(parseSync("- 'foo'", {"format": "YAML"}));
 </script>
 ```
 
-
-
-
-
 ## Code organization
 
 ### Formats
 
 A format is a set of rules how to serialize and deserialize data.
 
-Every format has a subfolder in [`./lib/backends`](./lib/backends).
+Every format has a subfolder in [`./src/lib/backend`](./lib/backends).
 
 ### Backends
 
 Every format has one or more backends, extending the [Backend base
-class](#module-backend-base).
+class](./src/lib/backend/base_backend.coffee).
 
 ### Method suffixes
 
@@ -321,6 +319,26 @@ traf.parseAsync(str, {"format":"JSON"}, function(err, data) {
 <!-- END-RENDER -->
 
 ## API
+
+### `guessFiletype(filename, opts={})`
+
+Guess parser options by looking at the filename.
+
+Will add information to `opts`, at least the `format` if it was
+recognized and possibly further options that can be guessed from
+the filename.
+
+```js
+console.log(traf.guessFilename('foo.json'))
+// {"format":"JSON"}
+console.log(traf.guessFilename('foo.tsv'))
+// {"format":"CSV", "delimiter": "\t"}
+```
+
+### `guessFilename(filename, opts)`
+
+Guess output filename by changing the extension to the
+`outputExtension` of the `format` in `opts`.
 
 ### `parseSync(str, opts)`
 ### `parseAsync(str, opts, cb)`
