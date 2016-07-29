@@ -12,7 +12,7 @@
     "url": "git+https://github.com/kba/traf.git"
   },
   "bin": {
-    "traf": "./cli.js"
+    "traf": "./bin/cli.js"
   },
   "author": "kba",
   "license": "MIT",
@@ -22,6 +22,7 @@
   "homepage": "https://github.com/kba/traf#readme",
   "dependencies": {
     "cson": "^1.0.5",
+    "cson-safe": "^1.0.5",
     "csv-parse": "^1.1.7",
     "csv-parser": "^1.9.3",
     "csv-stringify": "^1.0.4",

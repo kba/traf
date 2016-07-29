@@ -1,4 +1,4 @@
-Traf = require './lib/traf'
+Traf = require '../lib/traf'
 Fs = require 'fs'
 args = process.argv.slice(2)
 
