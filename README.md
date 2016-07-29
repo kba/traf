@@ -6,6 +6,7 @@ Transform between various data serialization formats
 	* [npm](#npm)
 	* [bower](#bower)
 * [Usage](#usage)
+	* [CLI](#cli)
 	* [Node JS](#node-js)
 	* [Browser](#browser)
 * [Code organization](#code-organization)
@@ -42,6 +43,34 @@ bower install https://github.com/kba/traf
 ```
 
 ## Usage
+
+### CLI
+
+Install the package globally (`npm install -g traf`)
+
+<!-- BEGIN-EVAL echo '<pre>';coffee src/cli.coffee;echo '</pre>' -->
+<pre>
+Usage: traf [options...] <input-file> [<output-file>]
+
+Transform between different serialization formats
+
+Options:
+    -h --help                   Show this help
+    -i --input-format FORMAT    Input format
+    -o --output-format FORMAT   Output format
+    -f --force                  Overwrite existing files
+    -I --indent INDENT          Indent data with INDENT spaces per level
+
+Arguments:
+    <input-file>    Input filename.
+                    Can be '-' to read from STDIN. Specify input format then.
+    <output-file>   Output filename.
+                    If omitted, derive output filename from input filename.
+                    Can be '-' to write to STDOUT. Specify output format then.
+</pre>
+
+<!-- END-EVAL -->
+
 
 ### Node JS
 
