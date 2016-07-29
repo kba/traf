@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/kba/traf#readme",
   "dependencies": {
-    "cson": "^1.0.5",
+    "cson": "^3.0.2",
     "cson-safe": "^1.0.5",
     "csv-parse": "^1.1.7",
     "csv-parser": "^1.9.3",

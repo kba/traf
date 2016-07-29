@@ -5,13 +5,13 @@ module.exports = class BaseBackend
 	stringifySyncFn : 'stringify'
 
 	stringifySync : (data, opts) ->
-		if opts.indent
+		if 'indent' of opts
 			@impl()[@stringifySyncFn] data, null, opts.indent
 		else
 			@impl()[@stringifySyncFn] data
 
 	parseSync: (str, opts) ->
-		@impl()[@parseSyncFn] str
+		@impl()[@parseSyncFn] str, opts
 
 	stringifyAsync : (data, opts, cb) ->
 		try
