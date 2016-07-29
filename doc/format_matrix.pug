@@ -1,0 +1,109 @@
+mixin yes
+	| ✓
+mixin wrapSync(msg)
+	| ≈
+mixin no
+	| ✗
+
+table
+	thead
+		tr
+			th(colspan=2)
+			th(colspan=2) #[code parse]
+			th(colspan=2) #[code stringify]
+			th(colspan=2) #[code parseFile]
+			th(colspan=2) #[code stringifyFile]
+		tr
+			th Format
+			th Backend
+			th #[a(href="#parsesyncstr-opts") #[code sync]]
+			th #[a(href="#parseasyncstr-opts-cb") #[code async]]
+			th #[a(href="#stringifysyncdata-opts") #[code sync]]
+			th #[a(href="#stringifyasyncdata-opts-cb") #[code async]]
+			th #[a(href="#parsefilesyncfilename-opts") #[code sync]]
+			th #[a(href="#parsefileasyncfilename-opts-cb") #[code async]]
+			th #[a(href="#stringifyfilesyncdata-opts") #[code sync]]
+			th #[a(href="#stringifyfileasyncdata-opts-cb") #[code async]]
+	tbody
+		tr
+			td JSON
+			td #[a(href="./src/lib/backend/JSON/json.coffee") json]
+			td #[+yes]
+			td #[+wrapSync]
+			td #[+yes]
+			td #[+wrapSync]
+			td #[+yes]
+			td #[+wrapSync]
+			td #[+yes]
+			td #[+wrapSync]
+		tr
+			td(rowspan=2) CSON
+			td #[a(href="./src/lib/backend/CSON/cson-safe.coffee") cson-safe]
+			td #[+yes]
+			td #[+wrapSync]
+			td #[+yes]
+			td #[+wrapSync]
+			td #[+yes]
+			td #[+wrapSync]
+			td #[+yes]
+			td #[+wrapSync]
+		tr
+			td #[a(href="./src/lib/backend/CSON/cson.coffee") cson]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+		tr
+			td TSON
+			td #[a(href="./src/lib/backend/TSON/tson.coffee") tson]
+			td #[+yes]
+			td #[+yes]
+			td #[+no]
+			td #[+no]
+			td #[+yes]
+			td #[+yes]
+			td #[+no]
+			td #[+no]
+		tr
+			td XML
+			td #[a(href="./src/lib/backend/XML/xml2js.coffee") xml2js]
+			td #[+no]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+no]
+			td #[+yes]
+			td #[+no]
+			td #[+yes]
+		tr
+			td YAML
+			td #[a(href="./src/lib/backend/YAML/js-yaml.coffee") js-yaml]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+		tr
+			td CSV
+			td #[a(href="./src/lib/backend/CSV/csv.coffee") csv]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+			td #[+yes]
+
+p #[strong Legend]:
+	ul.inline
+		li #[+yes] : Supported
+		li #[+wrapSync] : Supported by wrapping the sync call
+		li #[+yes] : Not Supported
