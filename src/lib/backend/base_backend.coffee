@@ -6,7 +6,7 @@ module.exports = class BaseBackend
 
 	stringifySync : (data, opts) ->
 		if opts.indent
-			@impl()[@stringifySyncFn] data, null, indent
+			@impl()[@stringifySyncFn] data, null, opts.indent
 		else
 			@impl()[@stringifySyncFn] data
 

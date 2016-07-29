@@ -106,3 +106,10 @@ module.exports = class Traf
 				opts[k] = v for k,v of format.inputExtensions[ext]
 				opts.format = formatName
 		return opts
+
+	guessFilename : (filename, opts={}) ->
+		if not 'format' of opts
+			throw new Error("Must give opts.format to guess filename")
+		else if opts.format not of @config.formats
+			throw new Error("Unsupported format: #{opts.format}")
+		return Utils.changeFileExtension filename, @config.formats[opts.format].outputExtension
