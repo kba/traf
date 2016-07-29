@@ -1,6 +1,8 @@
 # traf
 Transform between various data serialization formats
 
+[Demo](https://kba.github.io/traf/demo.html)
+
 <!-- BEGIN-MARKDOWN-TOC -->
 * [Installation](#installation)
 	* [npm](#npm)
@@ -86,7 +88,7 @@ console.log(t.parseSync("- 'foo'", {"format": "YAML"}));
 ```html
 <script src="./path/to/traf.js"></script>
 <!-- or -->
-<script src="https://cdn.rawgit.com/kba/traf/master/dist/traf.js"></script>
+<script src="https://kba.github.io/traf/dist/traf-latest.js"></script>
 <script>
 var t = new traf();
 console.log(parseSync("- 'foo'", {"format": "YAML"}));
