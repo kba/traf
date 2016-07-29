@@ -1,0 +1,45 @@
+mixin formatOptions
+	option JSON
+	option CSON
+	option TSON
+	option YAML
+	option CSV
+
+html
+	head
+		title traf demo
+		link(href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u", crossorigin="anonymous")
+		script(src="https://code.jquery.com/jquery-3.1.0.min.js")
+		script(src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js", integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa", crossorigin="anonymous")
+		script(src="./dist/traf-latest.js")
+		style.
+			textarea { width: 100%;min-height: 50vh;font-family: monospace }
+	body
+		script(type="text/plain", data-format="JSON")#sample-json
+			include ../samples/sample.json
+		script(type="text/plain", data-format="CSV")#sample-csv
+			include ../samples/sample.csv
+		nav.navbar.navbar-inverse
+			.container
+				.navbar-header
+					a.navbar-brand(href='#') traf demo
+		.container
+			.row
+				p Samples: 
+					a.btn.btn-default(data-sample='sample-json') JSON
+					a.btn.btn-default(data-sample='sample-csv') CSV
+			.row
+				.col-xs-4.leftPane
+					textarea
+				.col-xs-2.leftPane
+					button &rarr;
+					select
+						+formatOptions
+				.col-xs-2.rightPane
+					button &larr;
+					select
+						+formatOptions
+				.col-xs-4.rightPane
+					textarea
+		script
+			include:coffee-script ../coffee/demo.coffee

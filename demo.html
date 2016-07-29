@@ -1,0 +1,129 @@
+
+<html>
+  <head>
+    <title>traf demo</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="./dist/traf-latest.js"></script>
+    <style>textarea { width: 100%;min-height: 50vh;font-family: monospace }</style>
+  </head>
+  <body>
+    <script type="text/plain" data-format="JSON" id="sample-json">{
+  "name": "traf",
+  "version": "0.0.2",
+  "description": "Transform between various data serialization formats",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "coffee src/test/*.coffee",
+    "prepublish": "make"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kba/traf.git"
+  },
+  "bin": {
+    "traf": "./bin/cli.js"
+  },
+  "author": "kba",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kba/traf/issues"
+  },
+  "homepage": "https://github.com/kba/traf#readme",
+  "dependencies": {
+    "cson": "^3.0.2",
+    "cson-safe": "^1.0.5",
+    "csv-parse": "^1.1.7",
+    "csv-parser": "^1.9.3",
+    "csv-stringify": "^1.0.4",
+    "js-yaml": "^3.6.1",
+    "merge": "^1.2.0",
+    "pug": "^0.1.0",
+    "tson": "0.0.10",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "coffee-script": "^1.10.0",
+    "tape": "^4.6.0"
+  }
+}
+
+    </script>
+    <script type="text/plain" data-format="CSV" id="sample-csv">1,2,3
+4,5,6
+
+
+    </script>
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header"><a class="navbar-brand" href="#">traf demo</a></div>
+      </div>
+    </nav>
+    <div class="container">
+      <div class="row">
+        <p>Samples: <a class="btn btn-default" data-sample="sample-json">JSON</a><a class="btn btn-default" data-sample="sample-csv">CSV</a></p>
+      </div>
+      <div class="row">
+        <div class="col-xs-4 leftPane">
+          <textarea></textarea>
+        </div>
+        <div class="col-xs-2 leftPane">
+          <button>&rarr;</button>
+          <select>
+            <option>JSON</option>
+            <option>CSON</option>
+            <option>TSON</option>
+            <option>YAML</option>
+            <option>CSV</option>
+          </select>
+        </div>
+        <div class="col-xs-2 rightPane">
+          <button>&larr;</button>
+          <select>
+            <option>JSON</option>
+            <option>CSON</option>
+            <option>TSON</option>
+            <option>YAML</option>
+            <option>CSV</option>
+          </select>
+        </div>
+        <div class="col-xs-4 rightPane">
+          <textarea></textarea>
+        </div>
+      </div>
+    </div>
+    <script>(function() {
+  $("a[data-sample]").on('click', function() {
+    var sample, sampleName;
+    sampleName = $(this).attr('data-sample');
+    sample = $("#" + sampleName);
+    $(".leftPane textarea").val(sample.text().trim());
+    return $(".leftPane select").val(sample.attr('data-format'));
+  });
+
+  ["leftPane", "rightPane"].forEach(function(thisPane) {
+    var otherPane;
+    otherPane = thisPane === 'leftPane' ? 'rightPane' : 'leftPane';
+    return $("." + thisPane + " button").on('click', function() {
+      var t;
+      t = new traf();
+      return t.parseAsync($("." + thisPane + " textarea").val(), {
+        format: $("." + thisPane + " select").val()
+      }, function(err, data) {
+        console.log(err);
+        return t.stringifyAsync(data, {
+          format: $("." + otherPane + " select").val()
+        }, function(err, str) {
+          console.log(err);
+          return $("." + otherPane + " textarea").val(str);
+        });
+      });
+    });
+  });
+
+}).call(this);
+
+    </script>
+  </body>
+</html>
