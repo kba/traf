@@ -1,14 +1,22 @@
 Traf = require '../lib/traf'
 Test = require 'tape'
 
-config1 =
-	formats:
-		CSON:
-			backend: 'cson'
-
 testSerialize = ->
 	fixtures =
-		aoaNum:
+		obj:
+			config:
+				formats:
+					CSON:
+						backend: 'cson'
+			data: foo: '1'
+			str:
+				JSON: '{"foo":"1"}'
+				XML: '<foo>1</foo>'
+		arrayOfArrayOfStrings:
+			config:
+				formats:
+					CSON:
+						backend: 'cson'
 			data : [['1','2','3']]
 			str:
 				JSON: '[["1","2","3"]]'
@@ -41,11 +49,11 @@ testSerialize = ->
 	for fixtureName, fixture of fixtures
 		for format of fixture.str
 			do (format, fixture) -> Test "Testing #{format} / #{fixtureName}", (t) ->
-				traf = new Traf(config1)
+				traf = new Traf(fixture.config or {})
 				data = fixture.data
 				formatStr = fixture.str[format]
-				t.deepEquals traf.parseSync(formatStr, format:format), data, "#{format}.parseSync"
 				try
+					t.deepEquals traf.parseSync(formatStr, format:format), data, "#{format}.parseSync"
 					t.equals traf.stringifySync(data, format:format), formatStr, "#{format}.stringifySync"
 				catch e
 					throw e unless isNotSupported e

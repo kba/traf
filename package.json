@@ -27,7 +27,8 @@
     "csv-stringify": "^1.0.4",
     "js-yaml": "^3.6.1",
     "merge": "^1.2.0",
-    "tson": "0.0.10"
+    "tson": "0.0.10",
+    "xml2js": "^0.4.17"
   },
   "devDependencies": {
     "coffee-script": "^1.10.0",

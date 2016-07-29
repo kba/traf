@@ -3,7 +3,7 @@ CsvParseAsync = require 'csv-parse'
 CsvStringifyAsync = require 'csv-stringify'
 CsvParseSync = require 'csv-parse/lib/sync'
 CsvStringifySync = require 'csv-stringify/lib/sync'
-module.exports = class CSVBackend extends BaseBackend
+module.exports = class CsvBackend extends BaseBackend
 
 	matchExtension : (ext) ->
 		if ext is 'csv'

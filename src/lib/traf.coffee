@@ -7,8 +7,14 @@ require './backend/YAML/js-yaml'
 require './backend/JSON/json'
 require './backend/CSV/csv'
 require './backend/TSON/tson'
+require './backend/XML/xml2js'
 
 DEFAULT_CONFIG =
+	backendOpts:
+		xml2js:
+			Parser: {}
+			Builder:
+				headless: true
 	formats:
 		JSON:
 			backend: 'json'
@@ -31,6 +37,10 @@ DEFAULT_CONFIG =
 			backend: 'csv'
 			outputExtension: 'csv'
 			inputExtensions: 'csv': {delimiter:','}, 'tsv': {delimiter:'\t'}
+		XML:
+			backend: 'xml2js'
+			outputExtension: 'xml'
+			inputExtensions: 'xml': {}
 
 
 MECHANISMS = ['Sync', 'Async']
@@ -46,7 +56,8 @@ module.exports = class Traf
 		Object.keys(@formats).map (formatName) =>
 			format = @formats[formatName]
 			if 'impl' not of format
-				format.impl = new(require "./backend/#{formatName}/#{format.backend}")
+				mod = require "./backend/#{formatName}/#{format.backend}"
+				format.impl = new mod(@config.backendOpts[format.backend] or {})
 		for sync in MECHANISMS
 			for fnBase in METHODS
 				do (fnBase, sync) =>

@@ -1,3 +1,3 @@
 BaseBackend = require '../base_backend'
-module.exports = class JSONBackend extends BaseBackend
+module.exports = class JsonBackend extends BaseBackend
 	impl : -> JSON

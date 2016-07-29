@@ -1,3 +1,3 @@
 BaseBackend = require '../base_backend'
-module.exports = class CSONBackend extends BaseBackend
+module.exports = class CsonBackend extends BaseBackend
 	impl : -> require 'cson'
