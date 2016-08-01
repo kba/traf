@@ -1,0 +1,16 @@
+# CHANGELOG
+
+## Unreleased
+
+* Default instance 'TRAF'
+* cson-safe replaced by successor cson-parser
+
+## 0.0.2 - 2016-07-30
+
+* Fixed npm packaging bug (was missing lib dir)
+* Runs in browser
+* CLI for transformation
+
+## 0.0.1 - 2016-07-29
+
+* Initial release

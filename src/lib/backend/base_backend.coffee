@@ -11,7 +11,7 @@ module.exports = class BaseBackend
 			@impl()[@stringifySyncFn] data
 
 	parseSync: (str, opts) ->
-		@impl()[@parseSyncFn] str, opts
+		@impl()[@parseSyncFn] str
 
 	stringifyAsync : (data, opts, cb) ->
 		try
@@ -22,7 +22,7 @@ module.exports = class BaseBackend
 
 	parseAsync: (str, opts, cb) ->
 		try
-			data = @parseSync str
+			data = @parseSync str, opts
 		catch e
 			return cb e
 		cb null, data
@@ -42,8 +42,9 @@ module.exports = class BaseBackend
 		Fs = require 'fs'
 		opts.encoding or= 'utf8'
 		opts.format or= @guessFormat filename, opts
-		Fs.readFile filename, {encoding: opts.encoding}, (err, data) ->
+		Fs.readFile filename, {encoding: opts.encoding}, (err, data) =>
 			return cb err if err
+			console.log @
 			@parseAsync data, opts, cb
 
 	stringifyFileSync: (data, opts, cb) ->

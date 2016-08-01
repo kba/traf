@@ -2,7 +2,7 @@ Merge = require 'merge'
 Utils = require './utils'
 
 require './backend/CSON/cson'
-require './backend/CSON/cson-safe'
+require './backend/CSON/cson-parser'
 require './backend/YAML/js-yaml'
 require './backend/JSON/json'
 require './backend/CSV/csv'
@@ -22,7 +22,7 @@ DEFAULT_CONFIG =
 			inputExtensions: 'json': {}
 		CSON:
 			# backend: 'cson'
-			backend: 'cson-safe'
+			backend: 'cson-parser'
 			outputExtension: 'cson'
 			inputExtensions: 'cson': {}
 		TSON:
@@ -72,9 +72,10 @@ module.exports = class Traf
 			throw new Error("Must specify opts.format")
 		else if opts.format not of @formats
 			throw new Error("Unsupported format #{opts.format}")
-		else if not @formats[opts.format].impl[fn]
+		else if not @formats[opts.format].impl
+			console.log @formats[opts.format].impl[fn]
 			throw new Error("Backend #{opts.format} does not support #{fn}")
-		return @formats[opts.format].impl[fn](data, opts)
+		@formats[opts.format].impl[fn](data, opts)
 
 	_runAsync: (fn, data, opts, cb) ->
 		unless opts
@@ -85,19 +86,22 @@ module.exports = class Traf
 			return cb new Error("Unsupported format #{opts.format}")
 		else if not @formats[opts.format].impl[fn]
 			return cb new Error("Backend #{opts.format}/#{@formats[opts.format]} does not support #{fn}")
-		return @formats[opts.format].impl[fn](data, opts, cb)
+		@formats[opts.format].impl[fn](data, opts, cb)
 
 	parseFileSync : (filename, opts) ->
 		opts or= {}
 		unless opts.format
 			@guessFiletype filename, opts
+			console.log opts
 		@_runSync 'parseFileSync', filename, opts
 
 	parseFileAsync : (filename, opts, cb) ->
+		if typeof opts is 'function'
+			[opts, cb] = [null, opts]
 		opts or= {}
 		unless opts.format
 			@guessFiletype filename, opts
-		@_runAsync 'parseFileSync', filename, opts, cb
+		@_runAsync 'parseFileAsync', filename, opts, cb
 
 	guessFiletype : (filename, opts={}) ->
 		ext = Utils.getFileExtension filename
@@ -113,3 +117,5 @@ module.exports = class Traf
 		else if opts.format not of @config.formats
 			throw new Error("Unsupported format: #{opts.format}")
 		return Utils.changeFileExtension filename, @config.formats[opts.format].outputExtension
+
+Traf.TRAF = new Traf()
