@@ -1,6 +1,6 @@
 {
   "name": "traf",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Transform between various data serialization formats",
   "main": "lib/traf.js",
   "scripts": {
