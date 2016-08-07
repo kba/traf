@@ -25,6 +25,9 @@ bin/cli.js: src/bin/cli.coffee
 clean:
 	$(RM) -rf lib bin
 
+README:
+	shinclude -i -c xml README.md
+
 rebuild:
 	$(MAKE) clean
 	$(RM) node_modules

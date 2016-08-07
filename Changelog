@@ -1,9 +1,20 @@
 # CHANGELOG
 
+## TODO
+
+* Differentiate between parse / stringify / sync / async backends
+* Streaming/event interfaces in addition to sync/async
+
 ## Unreleased
 
 * Default instance 'TRAF'
+* parseFile*: guess file extension from `extension` array in options
+
+## 0.0.3 - 2016-08-01
+
 * cson-safe replaced by successor cson-parser
+* Updated README
+* gh-pages site
 
 ## 0.0.2 - 2016-07-30
 

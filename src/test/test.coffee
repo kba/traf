@@ -32,6 +32,10 @@ testSerialize = ->
 				CSV: '1,2,3\n'
 		arrayOfObjectas:
 			data : [foo: 1]
+			config:
+				formats:
+					CSON:
+						backend: 'cson'
 			str:
 				JSON: '[{"foo":1}]'
 				YAML: '- foo: 1\n'
@@ -69,13 +73,14 @@ testSerialize = ->
 
 testGuess = -> Test 'filename heuristics', (t) ->
 	traf = new Traf()
-	t.deepEquals traf.guessFiletype('foo.cson'), {format: 'CSON'}, 'guessed CSON filename'
-	t.deepEquals traf.guessFiletype('foo.tsv'), {delimiter:'\t', format: 'CSV'}, 'guessed TSV filename'
+	t.equals traf.guessFiletype('foo.cson'), 'CSON', 'guessed CSON filename'
+	t.equals traf.guessFiletype('foo.tsv'), 'CSV', 'guessed TSV filename'
 	t.end()
 
 testParseFile = -> Test 'parseFile', (t) ->
 	traf = new Traf()
 	t.deepEquals traf.parseFileSync(__dirname + '/sample1.json'), {foo:1}, 'parseFile JSON'
+	t.deepEquals traf.parseFileSync(__dirname + '/sample1', extensions: ['json']), {foo:1}, 'parseFile JSON (guessed)'
 	t.end()
 
 

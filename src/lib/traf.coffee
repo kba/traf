@@ -52,12 +52,12 @@ module.exports = class Traf
 
 	constructor : (opts={}) ->
 		@config = Merge.recursive DEFAULT_CONFIG, (opts or {})
+		# console.log @config.formats.CSON
 		@formats = Merge.recursive @config.formats
 		Object.keys(@formats).map (formatName) =>
 			format = @formats[formatName]
-			if 'impl' not of format
-				mod = require "./backend/#{formatName}/#{format.backend}"
-				format.impl = new mod(@config.backendOpts[format.backend] or {})
+			mod = require "./backend/#{formatName}/#{format.backend}"
+			format.impl = new mod(@config.backendOpts[format.backend] or {})
 		for sync in MECHANISMS
 			for fnBase in METHODS
 				do (fnBase, sync) =>
@@ -72,9 +72,10 @@ module.exports = class Traf
 			throw new Error("Must specify opts.format")
 		else if opts.format not of @formats
 			throw new Error("Unsupported format #{opts.format}")
-		else if not @formats[opts.format].impl
-			console.log @formats[opts.format].impl[fn]
+		else if not @formats[opts.format].impl[fn]
+			# console.log @formats[opts.format].impl[fn]
 			throw new Error("Backend #{opts.format} does not support #{fn}")
+		# console.log "impls:", @formats[opts.format]
 		@formats[opts.format].impl[fn](data, opts)
 
 	_runAsync: (fn, data, opts, cb) ->
@@ -89,11 +90,23 @@ module.exports = class Traf
 		@formats[opts.format].impl[fn](data, opts, cb)
 
 	parseFileSync : (filename, opts) ->
+		if not Utils.isNodeJS
+			throw new Error("parseFileSync only available in Node")
+		Fs = require 'fs'
 		opts or= {}
-		unless opts.format
-			@guessFiletype filename, opts
-			console.log opts
-		@_runSync 'parseFileSync', filename, opts
+		opts.extensions or= []
+		candidates = opts.extensions.map (ext) -> "#{filename}.#{ext}"
+		candidates.unshift filename
+		# console.log candidates
+		for candidate in candidates
+			try
+				Fs.accessSync candidate
+			catch e
+				continue
+			unless opts.format
+				opts.format = @guessFiletype candidate, opts
+			return @_runSync 'parseFileSync', candidate, opts
+		throw new Error "Could not determine actual filename of #{filename}, tried #{candidates}"
 
 	parseFileAsync : (filename, opts, cb) ->
 		if typeof opts is 'function'
@@ -109,7 +122,7 @@ module.exports = class Traf
 			if ext of format.inputExtensions
 				opts[k] = v for k,v of format.inputExtensions[ext]
 				opts.format = formatName
-		return opts
+				return formatName
 
 	guessFilename : (filename, opts={}) ->
 		if not 'format' of opts

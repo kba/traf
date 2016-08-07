@@ -19,8 +19,6 @@ Transform between various data serialization formats
 		* [`Async`](#async)
 * [Supported formats](#supported-formats)
 * [API](#api)
-	* [`guessFiletype(filename, opts={})`](#guessfiletypefilename-opts---)
-	* [`guessFilename(filename, opts)`](#guessfilenamefilename-opts)
 	* [`parseSync(str, opts)`](#parsesyncstr-opts)
 	* [`parseAsync(str, opts, cb)`](#parseasyncstr-opts-cb)
 	* [`stringifySync(data, opts)`](#stringifysyncdata-opts)
@@ -29,6 +27,8 @@ Transform between various data serialization formats
 	* [`parseFileAsync(filename, opts, cb)`](#parsefileasyncfilename-opts-cb)
 	* [`stringifyFileSync(data, opts)`](#stringifyfilesyncdata-opts)
 	* [`stringifyFileAsync(data, opts, cb)`](#stringifyfileasyncdata-opts-cb)
+	* [`guessFiletype(filename, opts={})`](#guessfiletypefilename-opts---)
+	* [`guessFilename(filename, opts)`](#guessfilenamefilename-opts)
 
 <!-- END-MARKDOWN-TOC -->
 
@@ -322,6 +322,47 @@ traf.parseAsync(str, {"format":"JSON"}, function(err, data) {
 
 ## API
 
+### `parseSync(str, opts)`
+### `parseAsync(str, opts, cb)`
+
+Load a file in any of the [supported serialization
+formats](#supported-formats).
+
+Options:
+
+* **`format`**: Input format
+
+### `stringifySync(data, opts)`
+### `stringifyAsync(data, opts, cb)`
+
+Serializes the data passed to a string.
+
+Options:
+
+* **`format`**: Output format
+
+### `parseFileSync(filename, [opts])`
+### `parseFileAsync(filename, [opts], cb)`
+
+Options:
+
+* `format`: Input format
+* `extensions`: List of extensions to add to the filename in case it does not exist.
+
+By default, input format is determined by [extension](#extension-map).
+
+Not available in the browser version.
+
+### `stringifyFileSync(data, opts)`
+### `stringifyFileAsync(data, opts, cb)`
+
+Serializes the data passed to a string and writes it to a file.
+
+Options:
+
+* **`filename`**: The filename to write to
+* `format`: If not given explicitly, determined by extension.
+
 ### `guessFiletype(filename, opts={})`
 
 Guess parser options by looking at the filename.
@@ -342,38 +383,3 @@ console.log(traf.guessFilename('foo.tsv'))
 Guess output filename by changing the extension to the
 `outputExtension` of the `format` in `opts`.
 
-### `parseSync(str, opts)`
-### `parseAsync(str, opts, cb)`
-
-Load a file in any of the [supported serialization
-formats](#supported-formats).
-
-Options:
-
-* **`format`**: Input format
-
-### `stringifySync(data, opts)`
-### `stringifyAsync(data, opts, cb)`
-
-Serializes the data passed to a string.
-
-Options:
-
-* **`format`**: Output format
-
-### `parseFileSync(filename, opts)`
-### `parseFileAsync(filename, opts, cb)`
-
-By default, input format is determined by [extension](#extension-map).
-
-Not available in the browser version.
-
-### `stringifyFileSync(data, opts)`
-### `stringifyFileAsync(data, opts, cb)`
-
-Serializes the data passed to a string and writes it to a file.
-
-Options:
-
-* **`filename`**: The filename to write to
-* `format`: If not given explicitly, determined by extension.
