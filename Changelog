@@ -7,11 +7,13 @@
 
 ## Unreleased
 
-* Default instance 'TRAF'
+## 0.0.4 - 2016-08-07
+
 * parseFile*: guess file extension from `extension` array in options
 
 ## 0.0.3 - 2016-08-01
 
+* Default instance 'TRAF'
 * cson-safe replaced by successor cson-parser
 * Updated README
 * gh-pages site
