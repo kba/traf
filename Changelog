@@ -7,6 +7,10 @@
 
 ## Unreleased
 
+## 0.0.6 - 2016-08-12
+
+* Regression in cli fixed
+
 ## 0.0.5 - 2016-08-12
 
 * Drop pug requirement

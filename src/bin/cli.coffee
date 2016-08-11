@@ -81,7 +81,8 @@ if args[0] is '-'
 else
 	log 'debug', "Reading from #{args[0]} ..."
 	if not opts.parse.format
-		guessed = traf.guessFiletype(args[0])
+		guessed = {}
+		traf.guessFiletype(args[0], guessed)
 		log 'debug', "Guessed parse options:", guessed
 		if 'format' not of guessed
 			error "Could not determine input format: #{args[0]}"
@@ -102,7 +103,8 @@ else
 		args[1] = traf.guessFilename args[0], opts.stringify
 	else
 		if not opts.stringify.format
-			guessed = traf.guessFiletype args[1]
+			guessed = {}
+			traf.guessFiletype args[1], guessed
 			log 'debug', "Guessed stringify options:", guessed
 			if 'format' not of guessed
 				error "Could not determine output format: #{args[1]}"
