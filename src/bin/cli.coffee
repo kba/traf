@@ -92,7 +92,7 @@ else
 if args[1] is '-'
 	if not opts.stringify.format
 		error "Must specify output format when writing to STDOUT"
-	process.stdout.setEncoding 'utf-8'
+	# process.stdout.setEncoding 'utf-8'
 	writeStream = process.stdout
 else
 	if not args[1]
@@ -125,5 +125,5 @@ readStream.on 'end', ->
 		return error err if err
 		traf.stringifyAsync data, opts.stringify, (err, converted) ->
 			return error err if err
-			writeStream.write converted.toString()
+			writeStream.write converted.toString('utf-8')
 		# console.log data

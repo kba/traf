@@ -7,6 +7,10 @@
 
 ## Unreleased
 
+## 0.0.8 - 2016-08-13
+
+* Don't set encoding on process.stdout
+
 ## 0.0.7 - 2016-08-13
 
 * Output debug messages to stderr
