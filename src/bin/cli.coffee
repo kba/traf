@@ -5,7 +5,7 @@ args = process.argv.slice(2)
 log = (level, msg, data) ->
 	if data
 		msg += " " + traf.stringifySync data, {format: 'CSON'}
-	console.log "[#{level.toUpperCase()}] #{msg}"
+	process.stderr.write "[#{level.toUpperCase()}] #{msg}\n"
 
 usage = ->
 	console.log """

@@ -7,6 +7,10 @@
 
 ## Unreleased
 
+## 0.0.7 - 2016-08-13
+
+* Output debug messages to stderr
+
 ## 0.0.6 - 2016-08-12
 
 * Regression in cli fixed
