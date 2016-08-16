@@ -7,6 +7,10 @@
 
 ## Unreleased
 
+## 0.0.9 - 2016-08-16
+
+* Missed dependency on aync
+
 ## 0.0.8 - 2016-08-13
 
 * Don't set encoding on process.stdout
