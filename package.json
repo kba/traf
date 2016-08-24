@@ -20,6 +20,9 @@
     "url": "https://github.com/kba/traf/issues"
   },
   "homepage": "https://github.com/kba/traf#readme",
+  "engines": {
+    "node": ">= 0.11.15"
+  },
   "dependencies": {
     "async": "^2.0.1",
     "cson": "^3.0.2",
