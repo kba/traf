@@ -10,6 +10,7 @@ require './backend/TSON/tson'
 require './backend/XML/xml2js'
 
 DEFAULT_CONFIG =
+	guessExtensions: ['yml', 'json']
 	backendOpts:
 		xml2js:
 			Parser: {}
@@ -20,27 +21,39 @@ DEFAULT_CONFIG =
 			backend: 'json'
 			outputExtension: 'json'
 			inputExtensions: 'json': {}
+			outputMimetype: 'application/json'
+			inputMimeTypes: {'application/json': {}}
 		CSON:
 			# backend: 'cson'
 			backend: 'cson-parser'
 			outputExtension: 'cson'
 			inputExtensions: 'cson': {}
+			outputMimetype: 'application/x-cson'
+			inputMimeTypes: {'application/x-cson': {}}
 		TSON:
 			backend: 'tson'
 			outputExtension: 'tson'
 			inputExtensions: 'tson': {}
+			outputMimetype: 'application/x-tson'
+			inputMimeTypes: {'application/x-tson': {}}
 		YAML:
 			backend: 'js-yaml'
 			outputExtension: 'yml'
 			inputExtensions: 'yaml': {}, 'yml': {}
+			outputMimetype: 'application/x-yaml'
+			inputMimeTypes: {'application/x-yaml': {}, 'text/yaml': {}}
 		CSV:
 			backend: 'csv'
 			outputExtension: 'csv'
+			outputMimetype: 'text/csv'
 			inputExtensions: 'csv': {delimiter:','}, 'tsv': {delimiter:'\t'}
+			inputMimeTypes: {'text/csv': {delimiter:','}, 'text/tab-separated-values': {delimiter: '\t'}}
 		XML:
 			backend: 'xml2js'
 			outputExtension: 'xml'
+			outputMimetype: 'application/xml'
 			inputExtensions: 'xml': {}
+			inputMimeTypes: {'application/xml': {}, 'text/xml': {}}
 
 
 MECHANISMS = ['Sync', 'Async']
@@ -71,8 +84,9 @@ module.exports = class Traf
 		else unless opts.format
 			throw new Error("Must specify opts.format")
 		else if opts.format not of @formats
-			throw new Error("Unsupported format #{opts.format}")
-		else if not @formats[opts.format].impl[fn]
+			unless @guessMimetypeFormat opts.format, opts
+				throw new Error("Unsupported format '#{opts.format}'")
+		if not @formats[opts.format].impl[fn]
 			# console.log @formats[opts.format].impl[fn]
 			throw new Error("Backend #{opts.format} does not support #{fn}")
 		# console.log "impls:", @formats[opts.format]
@@ -84,8 +98,9 @@ module.exports = class Traf
 		else unless opts.format
 			return cb new Error("Must specify opts.format")
 		else if opts.format not of @formats
-			return cb new Error("Unsupported format #{opts.format}")
-		else if not @formats[opts.format].impl[fn]
+			unless @guessMimetypeFormat opts.format, opts
+				return cb new Error("Unsupported format #{opts.format}")
+		if not @formats[opts.format].impl[fn]
 			return cb new Error("Backend #{opts.format}/#{@formats[opts.format]} does not support #{fn}")
 		@formats[opts.format].impl[fn](data, opts, cb)
 
@@ -94,7 +109,7 @@ module.exports = class Traf
 			throw new Error("parseFileSync only available in Node")
 		Fs = require 'fs'
 		opts or= {}
-		opts.extensions or= []
+		opts.extensions or= @config.guessExtensions
 		candidates = opts.extensions.map (ext) -> "#{filename}.#{ext}"
 		candidates.unshift filename
 		# console.log candidates
@@ -128,7 +143,15 @@ module.exports = class Traf
 		if not 'format' of opts
 			throw new Error("Must give opts.format to guess filename")
 		else if opts.format not of @config.formats
-			throw new Error("Unsupported format: #{opts.format}")
+			unless @guessMimetypeFormat opts.format, opts
+				throw new Error("Unsupported format: #{opts.format}")
 		return Utils.changeFileExtension filename, @config.formats[opts.format].outputExtension
+
+	guessMimetypeFormat : (mime, opts={}) ->
+		for formatName, format of @formats
+			if format.inputMimeTypes[mime]
+				opts[k] = v for k,v of format.inputMimeTypes[mime]
+				opts.format = formatName
+				return formatName
 
 Traf.TRAF = new Traf()

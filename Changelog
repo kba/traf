@@ -7,6 +7,10 @@
 
 ## Unreleased
 
+## 0.0.10 - 2016-08-24
+
+* Handle media types as 'format' identifiers
+
 ## 0.0.9 - 2016-08-16
 
 * Missed dependency on aync

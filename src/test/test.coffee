@@ -73,6 +73,8 @@ testSerialize = ->
 
 testGuess = -> Test 'filename heuristics', (t) ->
 	traf = new Traf()
+	t.equals traf.guessMimetypeFormat('application/json'), 'JSON', 'guessed JSON by MIME type'
+	t.equals traf.guessMimetypeFormat('application/x-yaml'), 'YAML', 'guessed YAML by MIME type'
 	t.equals traf.guessFiletype('foo.cson'), 'CSON', 'guessed CSON filename'
 	t.equals traf.guessFiletype('foo.tsv'), 'CSV', 'guessed TSV filename'
 	t.end()
@@ -81,6 +83,8 @@ testParseFile = -> Test 'parseFile', (t) ->
 	traf = new Traf()
 	t.deepEquals traf.parseFileSync(__dirname + '/sample1.json'), {foo:1}, 'parseFile JSON'
 	t.deepEquals traf.parseFileSync(__dirname + '/sample1', extensions: ['json']), {foo:1}, 'parseFile JSON (guessed)'
+	t.deepEquals traf.parseFileSync(__dirname + '/sample1.whatson', format: 'application/json'), {foo:1}, \
+		'parseFile JSON (guessed mime type)'
 	t.end()
 
 

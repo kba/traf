@@ -23,11 +23,12 @@ Transform between various data serialization formats
 	* [`parseAsync(str, opts, cb)`](#parseasyncstr-opts-cb)
 	* [`stringifySync(data, opts)`](#stringifysyncdata-opts)
 	* [`stringifyAsync(data, opts, cb)`](#stringifyasyncdata-opts-cb)
-	* [`parseFileSync(filename, opts)`](#parsefilesyncfilename-opts)
-	* [`parseFileAsync(filename, opts, cb)`](#parsefileasyncfilename-opts-cb)
+	* [`parseFileSync(filename, [opts])`](#parsefilesyncfilename--opts-)
+	* [`parseFileAsync(filename, [opts], cb)`](#parsefileasyncfilename--opts--cb)
 	* [`stringifyFileSync(data, opts)`](#stringifyfilesyncdata-opts)
 	* [`stringifyFileAsync(data, opts, cb)`](#stringifyfileasyncdata-opts-cb)
 	* [`guessFiletype(filename, opts={})`](#guessfiletypefilename-opts---)
+	* [`guessMimetypeFormat(mimetype, opts={})`](#guessmimetypeformatmimetype-opts---)
 	* [`guessFilename(filename, opts)`](#guessfilenamefilename-opts)
 
 <!-- END-MARKDOWN-TOC -->
@@ -82,6 +83,7 @@ Arguments:
 var t = new(require('traf'))();
 console.log(t.parseSync("- 'foo'", {"format": "YAML"}));
 ```
+
 
 ### Browser
 
@@ -377,6 +379,12 @@ console.log(traf.guessFilename('foo.json'))
 console.log(traf.guessFilename('foo.tsv'))
 // {"format":"CSV", "delimiter": "\t"}
 ```
+
+### `guessMimetypeFormat(mimetype, opts={})`
+
+Derive the format (e.g. `JSON`) from the MIME type (e.g. `application/json`)
+
+Will return the found format
 
 ### `guessFilename(filename, opts)`
 
