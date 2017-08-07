@@ -43,7 +43,7 @@ gh-pages:
 gh-pages/index.html: $(wildcard gh-pages/dist/*.js)
 	$(RM) $@
 	cd gh-pages/dist; \
-		ln -sf $$(ls *.js|tail -n1) traf-latest.js; \
+		cp -f $$(ls *.js|tail -n1) traf-latest.js; \
 		for i in *.js;do \
 			echo "<p><a href='./dist/$$i'>$$i</a> ($$(du -Dh $$i|cut -f1))</p>" >> ../index.html; \
 		done
