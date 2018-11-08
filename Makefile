@@ -1,3 +1,5 @@
+export
+PATH := ./node_modules/.bin:$(PATH)
 SRC = $(shell find src/lib -name '*.coffee')
 LIB = $(SRC:src/lib/%.coffee=lib/%.js)
 VERSION = $(shell node -pe 'require("./package.json").version')

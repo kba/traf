@@ -7,6 +7,13 @@
 
 ## Unreleased
 
+## 1.0.1 - 2018-11-08
+
+Fixed:
+
+  * insecure deps
+  * typos in readme
+
 ## 0.0.10 - 2016-08-24
 
 * Handle media types as 'format' identifiers

@@ -23,8 +23,8 @@ Transform between various data serialization formats
 	* [`parseAsync(str, opts, cb)`](#parseasyncstr-opts-cb)
 	* [`stringifySync(data, opts)`](#stringifysyncdata-opts)
 	* [`stringifyAsync(data, opts, cb)`](#stringifyasyncdata-opts-cb)
-	* [`parseFileSync(filename, [opts])`](#parsefilesyncfilename--opts-)
-	* [`parseFileAsync(filename, [opts], cb)`](#parsefileasyncfilename--opts--cb)
+	* [`parseFileSync(filename, opts)`](#parsefilesyncfilename-opts)
+	* [`parseFileAsync(filename, opts, cb)`](#parsefileasyncfilename-opts-cb)
 	* [`stringifyFileSync(data, opts)`](#stringifyfilesyncdata-opts)
 	* [`stringifyFileAsync(data, opts, cb)`](#stringifyfileasyncdata-opts-cb)
 	* [`guessFiletype(filename, opts={})`](#guessfiletypefilename-opts---)
@@ -53,7 +53,7 @@ bower install https://github.com/kba/traf
 
 Install the package globally (`npm install -g traf`)
 
-<!-- BEGIN-EVAL echo '```';coffee src/bin/cli.coffee;echo '```' -->
+<!-- BEGIN-EVAL -w '```' '```' -- coffee src/bin/cli.coffee -->
 ```
 Usage: traf [options...] <input-file> [<output-file>]
 

@@ -1,6 +1,6 @@
 {
   "name": "traf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Transform between various data serialization formats",
   "main": "lib/traf.js",
   "scripts": {
@@ -32,13 +32,15 @@
     "csv-parser": "^1.9.3",
     "csv-stringify": "^1.0.4",
     "js-yaml": "^3.6.1",
-    "merge": "^1.2.0",
+    "merge": "1.2.1",
     "tson": "0.0.10",
     "xml2js": "^0.4.17"
   },
   "devDependencies": {
+    "browserify": "16.2.3",
     "coffee-script": "^1.10.0",
     "pug": "^0.1.0",
+    "pug-cli": "1.0.0-alpha6",
     "tape": "^4.6.0"
   }
 }
