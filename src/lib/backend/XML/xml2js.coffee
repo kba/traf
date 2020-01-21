@@ -2,6 +2,7 @@ BaseBackend = require '../base_backend'
 Xml2Js = require 'xml2js'
 module.exports = class Xml2JsBackend extends BaseBackend
 	constructor: (opts) ->
+		super(opts)
 		@parser = new Xml2Js.Parser(opts.Parser)
 		@builder = new Xml2Js.Builder(opts.Builder)
 		@.parseSync = null
