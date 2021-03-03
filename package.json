@@ -40,7 +40,7 @@
   "devDependencies": {
     "browserify": "16.5.0",
     "coffee-script": "^1.12.7",
-    "pug": "^2.0.4",
+    "pug": "^3.0.1",
     "pug-cli": "1.0.0-alpha6",
     "tape": "^4.13.0"
   }
